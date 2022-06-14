@@ -1,0 +1,9 @@
+{
+	"name": "LearnData",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2435bb20-b17b-4d6c-b83c-fb644dacf0c6",
+		"tenantId": "73f1fad6-7198-433b-83c6-b685b388ae5c"
+	}
+}
