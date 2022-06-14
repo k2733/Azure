@@ -32,19 +32,7 @@
 						}
 					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "InputDataset",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "OutputDataset",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			},
 			{
 				"name": "Data flow1",
