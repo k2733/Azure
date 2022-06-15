@@ -1,0 +1,16 @@
+{
+	"name": "PayPayrollsO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "C##VCC",
+			"table": "PAY_PAYROLLS_F"
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "PerTimePeriosdsO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "C##VCC",
+			"table": "PER_TIME_PERIODS_V"
+		}
+	}
+}
