@@ -1,0 +1,16 @@
+{
+	"name": "KYUUYOSHOUYO_WKTB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "C##VCC",
+			"table": "ZHR_CM_KYUUYOSHOUYO_WKTB"
+		}
+	}
+}
