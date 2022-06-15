@@ -5,26 +5,14 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				},
 				{
-					"dataset": {
-						"referenceName": "DelimitedText2",
-						"type": "DatasetReference"
-					},
 					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText3",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
@@ -40,15 +28,13 @@
 				"          V2 as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     validateSchema: false) ~> source1",
 				"source(output(",
 				"          ID as string,",
 				"          name as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
+				"     validateSchema: false) ~> source2",
 				"source1, source2 join(source1@ID == source2@ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
