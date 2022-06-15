@@ -17,18 +17,28 @@
 						"type": "DatasetReference"
 					},
 					"name": "KYUUYOSHOUYO"
-				}
-			],
-			"sinks": [
+				},
 				{
 					"dataset": {
-						"referenceName": "Result",
+						"referenceName": "PayPayroolls_Bold",
 						"type": "DatasetReference"
 					},
-					"name": "Result"
+					"name": "PAY"
+				},
+				{
+					"dataset": {
+						"referenceName": "PerTimePeriosds_Blod",
+						"type": "DatasetReference"
+					},
+					"name": "Per"
 				}
 			],
-			"transformations": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -36,10 +46,17 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> KYUUYOSHOUYO",
-				"FIXED sink(allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Result"
+				"     ignoreNoFilesFound: false) ~> PAY",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Per",
+				"PAY, Per join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
