@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "FIXED",
+				"name": "S1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
+						"oracleReaderQuery": "SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\n--AND     PPF.PAYROLL_NAME LIKE '3300%'\nAND     PTPV.PERIOD_NAME = '7 2013 カレンダ月'\nORDER BY  PTPV.PAYROLL_ID;\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -43,7 +44,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "FIXED_VAlUE_TB",
+						"referenceName": "OracleTable1",
 						"type": "DatasetReference"
 					}
 				],
@@ -55,7 +56,7 @@
 				]
 			},
 			{
-				"name": "KYUUYOSHOUYO",
+				"name": "S2",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -67,197 +68,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "KYUUYOSHOUYO_WKTB",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "KYUUYOSHOUYO_Blob",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "SP_flow",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "FIXED",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "KYUUYOSHOUYO",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "PayPayrolls",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "PerTimePeriosds",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "1.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "SP_flow",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
+					"enableStaging": false
 				}
-			},
-			{
-				"name": "PayPayrolls",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "PayPayrolls_O",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "PayPayroolls_Bold",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "PerTimePeriosds",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "PerTimePeriosds_O",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "PerTimePeriosds_Blod",
-						"type": "DatasetReference"
-					}
-				]
 			}
 		],
 		"annotations": []
