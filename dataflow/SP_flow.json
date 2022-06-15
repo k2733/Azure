@@ -1,0 +1,34 @@
+{
+	"name": "SP_flow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "FIXED_VALUE_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "FIXED"
+				},
+				{
+					"dataset": {
+						"referenceName": "KYUUYOSHOUYO_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "KYUUYOSHOUYO"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> FIXED",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> KYUUYOSHOUYO"
+			]
+		}
+	}
+}
