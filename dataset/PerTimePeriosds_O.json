@@ -1,5 +1,5 @@
 {
-	"name": "PerTimePeriosdsO",
+	"name": "PerTimePeriosds_O",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "VCC",
