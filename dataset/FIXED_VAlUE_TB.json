@@ -1,0 +1,16 @@
+{
+	"name": "FIXED_VAlUE_TB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "C##VCC",
+			"table": "ZHR_CM_FIXED_VALUE_TB"
+		}
+	}
+}
