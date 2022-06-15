@@ -50,7 +50,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "FIXED_VALUE_Blob",
+						"referenceName": "S1Bolb",
 						"type": "DatasetReference"
 					}
 				]
@@ -68,8 +68,45 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "SELECT \n     LOGICAL_TABLE_NUMBER 固定値番号\n    ,LOGICAL_TABLE_NAME   固定値名称\n    ,KEY_ITEM_01          給与グループ\n    ,KEY_ITEM_02          従業員区分\n    ,KEY_ITEM_03          分類\n    ,FIXED_ITEM_01        公開日\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OracleTable2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "S2Bolb",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []

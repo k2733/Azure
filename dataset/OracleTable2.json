@@ -1,0 +1,12 @@
+{
+	"name": "OracleTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
