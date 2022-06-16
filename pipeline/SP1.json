@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy1",
+				"name": "Copy_PAYMENT_DATE",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -18,7 +18,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "@SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = 'pipeline().parameters.カレンダ月'\nORDER BY  PTPV.PAYROLL_ID;",
+							"value": "SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = '@{pipeline().parameters.カレンダ月}'\nORDER BY  PTPV.PAYROLL_ID;",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -54,6 +54,62 @@
 				"outputs": [
 					{
 						"referenceName": "S1Bolb",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy_OPEN_DATE",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "SELECT \n     LOGICAL_TABLE_NUMBER 固定値番号\n    ,LOGICAL_TABLE_NAME   固定値名称\n    ,KEY_ITEM_01          給与グループ\n    ,KEY_ITEM_02          従業員区分\n    ,KEY_ITEM_03          分類\n    ,FIXED_ITEM_01        公開日\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OracleSource2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "S2Bolb",
 						"type": "DatasetReference"
 					}
 				]
