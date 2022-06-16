@@ -1,0 +1,12 @@
+{
+	"name": "SourceDataset_k5f",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
