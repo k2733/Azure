@@ -68,6 +68,69 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "S2",
+						"dependencyConditions": [
+							"Succeeded",
+							"Failed",
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "SELECT '@{pipeline（）.DataFactory}' 作为DataFactory_Name，\n\n'@{pipeline（）.Pipeline}' 作为Pipeline_Name，\n\n'@{activity（'copytables'）.output.executionDetails[0].source.type}' 作为Source_Type，\n\n'@{activity（'copytables'）.output.executionDetails[0].sink.type}' 作为Sink_Type，\n\n'@{activity（'copytables'）.output.executionDetails[0].status}' 作为Execution_Status，\n\n'@{activity（'copytables'）.output.rowsRead}' as RowsRead，\n\n'@{activity（'copytables'）.output.rowsCopied}' as RowsWritten\n\n'@{activity（'copytables'）.output.copyDuration}' as CopyDurationInSecs，\n\n'@{activity（'copytables'）.output.executionDetails[0].start}' 作为CopyActivity_Start_Time，\n\n'@{utcnow（）}' 作为CopyActivity_End_Time，\n\n'@{pipeline（）.RunId}' as RunId，\n\n'@{pipeline（）.TriggerType}' as TriggerType，\n\n'@{pipeline（）.TriggerName}' as TriggerName，\n\n'@{pipeline（）.TriggerTime}' as TriggerTime",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OracleSource1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
