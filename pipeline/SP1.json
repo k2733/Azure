@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\n--AND     PPF.PAYROLL_NAME LIKE '3300%'\nAND     PTPV.PERIOD_NAME = '7 2013 カレンダ月'\nORDER BY  PTPV.PAYROLL_ID;",
+						"oracleReaderQuery": "SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nORDER BY  PTPV.PAYROLL_ID;",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
