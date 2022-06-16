@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Result2",
+				"fileName": "CopyOracle1",
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",

@@ -1,5 +1,5 @@
 {
-	"name": "OracleTable2",
+	"name": "OracleSource2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "VCC",
