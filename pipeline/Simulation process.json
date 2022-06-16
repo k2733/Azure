@@ -33,20 +33,6 @@
 						}
 					},
 					"enableStaging": false,
-					"logSettings": {
-						"enableCopyActivityLog": true,
-						"copyActivityLogSettings": {
-							"logLevel": "Info",
-							"enableReliableLogging": false
-						},
-						"logLocationSettings": {
-							"linkedServiceName": {
-								"referenceName": "AzureStorageLinkedService",
-								"type": "LinkedServiceReference"
-							},
-							"path": "spfile"
-						}
-					},
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
