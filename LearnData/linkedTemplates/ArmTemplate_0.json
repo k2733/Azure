@@ -151,7 +151,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Result.csv",
+						"fileName": "Result2",
 						"container": "spfile"
 					},
 					"columnDelimiter": ",",
