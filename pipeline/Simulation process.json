@@ -94,7 +94,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "SELECT '@{pipeline（）.DataFactory}' 作为DataFactory_Name，\n\n'@{pipeline（）.Pipeline}' 作为Pipeline_Name，\n\n'@{activity（'copytables'）.output.executionDetails[0].source.type}' 作为Source_Type，\n\n'@{activity（'copytables'）.output.executionDetails[0].sink.type}' 作为Sink_Type，\n\n'@{activity（'copytables'）.output.executionDetails[0].status}' 作为Execution_Status，\n\n'@{activity（'copytables'）.output.rowsRead}' as RowsRead，\n\n'@{activity（'copytables'）.output.rowsCopied}' as RowsWritten\n\n'@{activity（'copytables'）.output.copyDuration}' as CopyDurationInSecs，\n\n'@{activity（'copytables'）.output.executionDetails[0].start}' 作为CopyActivity_Start_Time，\n\n'@{utcnow（）}' 作为CopyActivity_End_Time，\n\n'@{pipeline（）.RunId}' as RunId，\n\n'@{pipeline（）.TriggerType}' as TriggerType，\n\n'@{pipeline（）.TriggerName}' as TriggerName，\n\n'@{pipeline（）.TriggerTime}' as TriggerTime",
+						"oracleReaderQuery": {
+							"value": "SELECT ‘@{pipeline().DataFactory}’ as DataFactory_Name,\n\n‘@{pipeline().Pipeline}’ as Pipeline_Name,\n\n‘@{activity('S2').output.executionDetails[0].source.type}’ as Source_Type,\n\n‘@{activity('S2').output.executionDetails[0].sink.type}’ as Sink_Type,\n\n‘@{activity('S2').output.executionDetails[0].status}’ as Execution_Status,\n\n‘@{activity('S2').output.rowsRead}’ as RowsRead,\n\n‘@{activity('S2').output.rowsCopied}’ as RowsWritten\n\n‘@{activity('S2').output.copyDuration}’ as CopyDurationInSecs,\n\n‘@{activity('S2').output.executionDetails[0].start}’ as CopyActivity_Start_Time,\n\n‘utcnow()’ as CopyActivity_End_Time,\n\n‘@{pipeline().RunId}’ as RunId,\n\n‘@{pipeline().TriggerType}’ as TriggerType,\n\n‘@{pipeline().TriggerName}’ as TriggerName,\n\n‘@{pipeline().TriggerTime}’ as TriggerTime",
+							"type": "Expression"
+						},
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
