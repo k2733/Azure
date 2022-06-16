@@ -50,7 +50,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "S2Bolb",
+						"referenceName": "S1Bolb",
 						"type": "DatasetReference"
 					}
 				]
