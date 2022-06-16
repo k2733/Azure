@@ -5,12 +5,22 @@
 			"referenceName": "AzureStorageLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"作成日時": {
+				"type": "string",
+				"defaultValue": "@{pipeline().parameters.作成日時}"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CopyOracle1",
+				"folderPath": {
+					"value": "@dataset().作成日時",
+					"type": "Expression"
+				},
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
