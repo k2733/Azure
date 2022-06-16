@@ -1,0 +1,53 @@
+{
+	"name": "CopyPipeline_k5f",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_k5f",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "SELECT \r\n     LOGICAL_TABLE_NUMBER 固定値番号\r\n    ,LOGICAL_TABLE_NAME   固定値名称\r\n    ,KEY_ITEM_01          給与グループ\r\n    ,KEY_ITEM_02          従業員区分\r\n    ,KEY_ITEM_03          分類\r\n    ,FIXED_ITEM_01        公開日\r\nFROM \r\n    ZHR_CM_FIXED_VALUE_TB FIXED \r\nWHERE \r\n  LOGICAL_TABLE_NUMBER = '802'\r\n  AND KEY_ITEM_03 = '給与'\r\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\r\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_k5f",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_k5f",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
