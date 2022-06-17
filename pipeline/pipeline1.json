@@ -25,6 +25,13 @@
 							"source2": {
 								"作成日時": "@{pipeline().parameters.作成日時}"
 							}
+						},
+						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"作成日時": "@{pipeline().parameters.作成日時}"
+								}
+							}
 						}
 					},
 					"compute": {

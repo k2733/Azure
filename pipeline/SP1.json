@@ -148,7 +148,22 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"作成日時": "@{pipeline().parameters.作成日時}"
+							},
+							"source2": {
+								"作成日時": "@{pipeline().parameters.作成日時}"
+							}
+						},
+						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"作成日時": "@{pipeline().parameters.作成日時}"
+								}
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -179,58 +194,6 @@
 						"computeType": "General"
 					},
 					"traceLevel": "Fine"
-				}
-			},
-			{
-				"name": "ForEach1",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "dataflow2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('dataflow2').output",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Copy data1",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "OracleSource",
-									"oracleReaderQuery": {
-										"value": "select * \nfrom ZHR_CM_KYUUYOSHOUYO_WKTB\nWHERE PAYROLL_NAME in ",
-										"type": "Expression"
-									},
-									"partitionOption": "None",
-									"queryTimeout": "02:00:00"
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "OracleSource3",
-									"type": "DatasetReference"
-								}
-							]
-						}
-					]
 				}
 			}
 		],
