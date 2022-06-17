@@ -60,6 +60,7 @@
 				"     broadcast: 'auto')~> join1",
 				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['Join'],",
 				"     mapColumn(",
 				"          AA,",
 				"          BB,",
@@ -69,7 +70,8 @@
 				"          GG,",
 				"          HH,",
 				"          II",
-				"     )) ~> sink1"
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
