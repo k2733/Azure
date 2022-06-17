@@ -113,58 +113,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy_PAYMENT_DATE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy_OPEN_DATE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "1.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"作成日時": "@{pipeline().parameters.作成日時}"
-							},
-							"source2": {
-								"作成日時": "@{pipeline().parameters.作成日時}"
-							}
-						},
-						"linkedServiceParameters": {
-							"source1": {
-								"schemaLinkedService": {
-									"作成日時": "@{pipeline().parameters.作成日時}"
-								}
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
 			}
 		],
 		"parameters": {
