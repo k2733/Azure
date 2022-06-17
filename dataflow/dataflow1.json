@@ -54,14 +54,23 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
 				"source1, source2 join(source1@Column_1 == source2@Column_3,",
-				"     joinType:'left',",
+				"     joinType:'outer',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     mapColumn(",
+				"          C1 = source1@Column_1,",
+				"          C2 = source1@Column_2,",
+				"          c3 = source1@Column_3,",
+				"          Column_1 = source2@Column_1,",
+				"          Column_2 = source2@Column_2,",
+				"          Column_3 = source2@Column_3,",
+				"          Column_4,",
+				"          Column_5,",
+				"          Column_6",
+				"     )) ~> sink1"
 			]
 		}
 	}

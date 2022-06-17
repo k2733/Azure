@@ -54,7 +54,10 @@
 				"outputs": [
 					{
 						"referenceName": "S1Bolb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"作成日時": "@{pipeline().parameters.作成日時}"
+						}
 					}
 				]
 			},
@@ -110,46 +113,12 @@
 				"outputs": [
 					{
 						"referenceName": "S2Bolb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"作成日時": "@{pipeline().parameters.作成日時}"
+						}
 					}
 				]
-			},
-			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy_PAYMENT_DATE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy_OPEN_DATE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "1.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow1",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
 			}
 		],
 		"parameters": {
