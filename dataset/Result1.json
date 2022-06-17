@@ -1,26 +1,16 @@
 {
-	"name": "S2Bolb",
+	"name": "Result1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureStorageLinkedService",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"作成日時": {
-				"type": "string",
-				"defaultValue": "@{pipeline().parameters.作成日時}"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "CopyOracle2",
-				"folderPath": {
-					"value": "@dataset().作成日時",
-					"type": "Expression"
-				},
+				"fileName": "Result1",
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
@@ -28,6 +18,15 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "PAYROLL_NAME",
+				"type": "String"
+			},
+			{
+				"name": "DAY",
+				"type": "String"
+			}
+		]
 	}
 }

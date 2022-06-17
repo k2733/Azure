@@ -27,9 +27,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     给与group as string[] (array(PAYROLL_NAME))",
-				"}",
 				"source(output(",
 				"          PAYROLL_NAME as string,",
 				"          DAY as string",
@@ -44,8 +41,13 @@
 				"          PAYROLL_NAME as string,",
 				"          DAY as string",
 				"     ),",
+				"     partitionFileNames:['Filter'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          PAYROLL_NAME",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

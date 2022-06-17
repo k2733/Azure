@@ -172,10 +172,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow2",
-						"type": "DataFlowReference",
-						"parameters": {
-							"group": "array(PAYROLL_NAME)"
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -189,12 +186,6 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
 						"activity": "dataflow2",
 						"dependencyConditions": [
 							"Succeeded"
@@ -204,16 +195,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('dataflow2').PAYROLL_NAME",
+						"value": "@activity('dataflow2').output",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "dataflow1",
-							"type": "ExecuteDataFlow",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "1.00:00:00",
+								"timeout": "7.00:00:00",
 								"retry": 0,
 								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
@@ -221,16 +212,23 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"dataflow": {
-									"referenceName": "dataflow1",
-									"type": "DataFlowReference"
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "select * \nfrom ZHR_CM_KYUUYOSHOUYO_WKTB\nWHERE PAYROLL_NAME in ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
 								},
-								"compute": {
-									"coreCount": 8,
-									"computeType": "General"
-								},
-								"traceLevel": "Fine"
-							}
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "OracleSource3",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}

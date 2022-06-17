@@ -18,6 +18,43 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "AA",
+				"type": "String"
+			},
+			{
+				"name": "BB",
+				"type": "String"
+			},
+			{
+				"name": "CC",
+				"type": "String"
+			},
+			{
+				"name": "DD",
+				"type": "String"
+			},
+			{
+				"name": "EE",
+				"type": "String"
+			},
+			{
+				"name": "FF",
+				"type": "String"
+			},
+			{
+				"name": "GG",
+				"type": "String"
+			},
+			{
+				"name": "HH",
+				"type": "String"
+			},
+			{
+				"name": "II",
+				"type": "String"
+			}
+		]
 	}
 }
