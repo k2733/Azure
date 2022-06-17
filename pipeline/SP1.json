@@ -18,7 +18,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = '@{pipeline().parameters.カレンダ月}'\nORDER BY  PTPV.PAYROLL_ID;",
+							"value": "SELECT   PPF.PAYROLL_NAME       aa\n        ,PTPV.PERIOD_NAME       bb\n        ,REGULAR_PAYMENT_DATE   cc\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = '@{pipeline().parameters.カレンダ月}'\nORDER BY  PTPV.PAYROLL_ID;",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -74,7 +74,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "SELECT \n     LOGICAL_TABLE_NUMBER 固定値番号\n    ,LOGICAL_TABLE_NAME   固定値名称\n    ,KEY_ITEM_01          給与グループ\n    ,KEY_ITEM_02          従業員区分\n    ,KEY_ITEM_03          分類\n    ,FIXED_ITEM_01        公開日\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+							"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -113,6 +113,43 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Copy_PAYMENT_DATE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy_OPEN_DATE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"parameters": {
