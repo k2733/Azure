@@ -18,7 +18,7 @@
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CopyOracle2",
 				"folderPath": {
-					"value": "@dataset().作成日時",
+					"value": "202203",
 					"type": "Expression"
 				},
 				"container": "spfile"
