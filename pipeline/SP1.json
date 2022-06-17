@@ -174,7 +174,7 @@
 						"referenceName": "dataflow2",
 						"type": "DataFlowReference",
 						"parameters": {
-							"给与group": "array(PAYROLL_NAME)"
+							"group": "array(PAYROLL_NAME)"
 						}
 					},
 					"compute": {
