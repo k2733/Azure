@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "DelimitedText2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureStorageLinkedService",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "CopyOracle1",
+				"fileName": "CopyOracle2",
 				"folderPath": "202203",
 				"container": "spfile"
 			},
@@ -19,6 +19,15 @@
 			"quoteChar": "\""
 		},
 		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
 			{
 				"type": "String"
 			},
