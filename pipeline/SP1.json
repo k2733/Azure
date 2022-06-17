@@ -125,6 +125,11 @@
 				"defaultValue": "7 2022 カレンダ月"
 			}
 		},
+		"variables": {
+			"数组1": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
