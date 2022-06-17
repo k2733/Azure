@@ -1,0 +1,17 @@
+{
+	"name": "OracleDataSource",
+	"properties": {
+		"description": "Connection to your data source store.",
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": ""
+		}
+	}
+}

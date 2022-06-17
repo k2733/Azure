@@ -1,0 +1,25 @@
+{
+	"name": "OracleExternal_ControlTable",
+	"properties": {
+		"description": "The external control table is used to store the partition list of data source tables.",
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
