@@ -73,6 +73,129 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStorageLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "CopyOracle1",
+						"folderPath": "202203",
+						"container": "spfile"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AA",
+						"type": "String"
+					},
+					{
+						"name": "BB",
+						"type": "String"
+					},
+					{
+						"name": "CC",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStorageLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStorageLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "CopyOracle2",
+						"folderPath": "202203",
+						"container": "spfile"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DD",
+						"type": "String"
+					},
+					{
+						"name": "EE",
+						"type": "String"
+					},
+					{
+						"name": "FF",
+						"type": "String"
+					},
+					{
+						"name": "GG",
+						"type": "String"
+					},
+					{
+						"name": "HH",
+						"type": "String"
+					},
+					{
+						"name": "II",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStorageLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Join1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStorageLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Join",
+						"container": "spfile"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStorageLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OracleSource1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -109,7 +232,25 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/S1Bolb')]",
+			"name": "[concat(parameters('factoryName'), '/OracleSource3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "VCC",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/VCC')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PayrollFilter')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -122,12 +263,55 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "CopyOracle1",
 						"container": "spfile"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": false,
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PAYROLL_NAME",
+						"type": "String"
+					},
+					{
+						"name": "DAY",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStorageLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/S1Bolb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStorageLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"作成日時": {
+						"type": "string",
+						"defaultValue": "@{pipeline().parameters.作成日時}"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "CopyOracle1",
+						"folderPath": "202203",
+						"container": "spfile"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": []
@@ -145,12 +329,22 @@
 					"referenceName": "AzureStorageLinkedService",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"作成日時": {
+						"type": "string",
+						"defaultValue": "@{pipeline().parameters.作成日時}"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "CopyOracle2",
+						"folderPath": {
+							"value": "202203",
+							"type": "Expression"
+						},
 						"container": "spfile"
 					},
 					"columnDelimiter": ",",
@@ -165,13 +359,193 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/payroll')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStorageLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "payroll.csv",
+						"container": "spfile"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PAYROLL_NAME",
+						"type": "String"
+					},
+					{
+						"name": "DAY",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStorageLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Join1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          AA as string,",
+						"          BB as string,",
+						"          CC as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          DD as string,",
+						"          EE as string,",
+						"          FF as string,",
+						"          GG as string,",
+						"          HH as string,",
+						"          II as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source1, source2 join(AA == FF,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['Join'],",
+						"     mapColumn(",
+						"          AA,",
+						"          BB,",
+						"          CC,",
+						"          DD,",
+						"          EE,",
+						"          GG,",
+						"          HH,",
+						"          II",
+						"     ),",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
+				"[concat(variables('factoryId'), '/datasets/Join1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "payroll",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PayrollFilter",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     group as string[] (array(PAYROLL_NAME))",
+						"}",
+						"source(output(",
+						"          PAYROLL_NAME as string,",
+						"          DAY as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 filter(DAY=='16') ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          PAYROLL_NAME as string,",
+						"          DAY as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/payroll')]",
+				"[concat(variables('factoryId'), '/datasets/PayrollFilter')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SP1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy1",
+						"name": "Copy_PAYMENT_DATE",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -186,7 +560,7 @@
 							"source": {
 								"type": "OracleSource",
 								"oracleReaderQuery": {
-									"value": "@SELECT   PPF.PAYROLL_NAME       給与グループ\n        ,PTPV.PERIOD_NAME       カレンダ月\n        ,REGULAR_PAYMENT_DATE   支給日\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = 'pipeline().parameters.カレンダ月'\nORDER BY  PTPV.PAYROLL_ID;",
+									"value": "SELECT   PPF.PAYROLL_NAME       aa\n        ,PTPV.PERIOD_NAME       bb\n        ,REGULAR_PAYMENT_DATE   cc\nFROM    PER_TIME_PERIODS_V PTPV\n       ,PAY_PAYROLLS_F     PPF\nWHERE   PTPV.PAYROLL_ID = PPF.PAYROLL_ID\nAND     PTPV.PERIOD_NAME = '@{pipeline().parameters.カレンダ月}'\nORDER BY  PTPV.PAYROLL_ID;",
 									"type": "Expression"
 								},
 								"partitionOption": "None",
@@ -224,40 +598,14 @@
 							{
 								"referenceName": "S1Bolb",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"作成日時": "@{pipeline().parameters.作成日時}"
+								}
 							}
 						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"作成日時": {
-						"type": "string",
-						"defaultValue": "202203"
 					},
-					"カレンダ月": {
-						"type": "string",
-						"defaultValue": "7 2022 カレンダ月"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OracleSource1')]",
-				"[concat(variables('factoryId'), '/datasets/S1Bolb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SP2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
 					{
-						"name": "Copy2",
+						"name": "Copy_OPEN_DATE",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -271,7 +619,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "OracleSource",
-								"oracleReaderQuery": "SELECT \n     LOGICAL_TABLE_NUMBER 固定値番号\n    ,LOGICAL_TABLE_NAME   固定値名称\n    ,KEY_ITEM_01          給与グループ\n    ,KEY_ITEM_02          従業員区分\n    ,KEY_ITEM_03          分類\n    ,FIXED_ITEM_01        公開日\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02",
+								"oracleReaderQuery": {
+									"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+									"type": "Expression"
+								},
 								"partitionOption": "None",
 								"queryTimeout": "02:00:00"
 							},
@@ -307,20 +658,168 @@
 							{
 								"referenceName": "S2Bolb",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"作成日時": "@{pipeline().parameters.作成日時}"
+								}
 							}
 						]
+					},
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy_PAYMENT_DATE",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Copy_OPEN_DATE",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "dataflow2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Data flow1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "dataflow2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('dataflow2').PAYROLL_NAME",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "dataflow1",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "1.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "dataflow1",
+											"type": "DataFlowReference",
+											"parameters": {},
+											"datasetParameters": {
+												"source1": {},
+												"source2": {},
+												"sink1": {}
+											}
+										},
+										"staging": {},
+										"compute": {
+											"coreCount": 8,
+											"computeType": "General"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"作成日時": {
+						"type": "string",
+						"defaultValue": "202203"
+					},
+					"カレンダ月": {
+						"type": "string",
+						"defaultValue": "7 2022 カレンダ月"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OracleSource1')]",
+				"[concat(variables('factoryId'), '/datasets/S1Bolb')]",
 				"[concat(variables('factoryId'), '/datasets/OracleSource2')]",
-				"[concat(variables('factoryId'), '/datasets/S2Bolb')]"
+				"[concat(variables('factoryId'), '/datasets/S2Bolb')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
 			]
 		}
 	]
