@@ -1,0 +1,12 @@
+{
+	"name": "OracleSource3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VCC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
