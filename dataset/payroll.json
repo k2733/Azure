@@ -1,0 +1,32 @@
+{
+	"name": "payroll",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "payroll.csv",
+				"container": "spfile"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PAYROLL_NAME",
+				"type": "String"
+			},
+			{
+				"name": "DAY",
+				"type": "String"
+			}
+		]
+	}
+}
