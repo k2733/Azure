@@ -21,12 +21,15 @@
 		},
 		"schema": [
 			{
+				"name": "AA",
 				"type": "String"
 			},
 			{
+				"name": "BB",
 				"type": "String"
 			},
 			{
+				"name": "CC",
 				"type": "String"
 			}
 		]
