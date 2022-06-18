@@ -27,6 +27,9 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     payrollname as string[] ([PAYROLL_NAME])",
+				"}",
 				"source(output(",
 				"          PAYROLL_NAME as string,",
 				"          DAY as string",
