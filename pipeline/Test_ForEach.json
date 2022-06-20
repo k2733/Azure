@@ -61,7 +61,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nAND KEY_ITEM_01 = @item()\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+										"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nAND KEY_ITEM_01 in '@{item()}'\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
