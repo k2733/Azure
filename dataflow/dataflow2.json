@@ -46,8 +46,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
 				"          PAYROLL_NAME",
-				"     ),",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     )) ~> sink1"
 			]
 		}
 	}
