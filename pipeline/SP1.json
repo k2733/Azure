@@ -257,7 +257,10 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow2",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"payrollname": "[PAYROLL_NAME]"
+						}
 					},
 					"compute": {
 						"coreCount": 8,

@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "output1",
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
