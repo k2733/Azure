@@ -73,7 +73,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy_PAYMENT_DATE",
+						"activity": "ForEach1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -143,6 +143,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "Copy_OPEN_DATE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -170,7 +176,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "Data flow2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -179,7 +185,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('payrollname')",
+						"value": "@array(variables('payrollname'))",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -265,26 +271,6 @@
 						"computeType": "General"
 					},
 					"traceLevel": "Fine"
-				}
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Data flow2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "payrollname",
-					"value": {
-						"value": "@array(activity('Data flow2').output)",
-						"type": "Expression"
-					}
 				}
 			}
 		],
