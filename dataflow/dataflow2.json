@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
+						"referenceName": "PayrollFilter",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -39,17 +39,16 @@
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          DD as string,",
-				"          EE as string,",
-				"          FF as string,",
-				"          GG as string,",
-				"          HH as string,",
-				"          II as string",
+				"          PAYROLL_NAME as string,",
+				"          DAY as string",
 				"     ),",
 				"     partitionFileNames:['Filter'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          PAYROLL_NAME",
+				"     ),",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
