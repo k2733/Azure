@@ -61,7 +61,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 derive({列1} = addDays(toDate(CC),-toInteger(II))) ~> derivedColumn1",
+				"join1 derive({公开日} = addDays(toDate(CC),-toInteger(II))) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
