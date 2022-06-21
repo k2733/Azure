@@ -174,7 +174,14 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -251,14 +258,7 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "ForEach1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
@@ -278,6 +278,26 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Data flow2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "payrollname",
+					"value": {
+						"value": "@array(activity('Data flow2').output)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -288,15 +308,6 @@
 			"カレンダ月": {
 				"type": "string",
 				"defaultValue": "7 2022 カレンダ月"
-			}
-		},
-		"variables": {
-			"payrollname": {
-				"type": "Array",
-				"defaultValue": [
-					"0105.日給月給",
-					"0092.日給月給"
-				]
 			}
 		},
 		"annotations": []
