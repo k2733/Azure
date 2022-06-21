@@ -18,15 +18,6 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "PAYROLL_NAME",
-				"type": "String"
-			},
-			{
-				"name": "DAY",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }

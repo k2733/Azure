@@ -174,14 +174,7 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Data flow2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -252,7 +245,14 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
