@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Join",
+				"fileName": "Join11",
 				"container": "spfile"
 			},
 			"columnDelimiter": "\t",

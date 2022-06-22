@@ -71,7 +71,6 @@
 				"          HH as string,",
 				"          II as string",
 				"     ),",
-				"     partitionFileNames:['Join'],",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
