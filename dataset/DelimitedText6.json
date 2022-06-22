@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "zip1",
 				"folderPath": "zip",
 				"container": "spfile"
 			},

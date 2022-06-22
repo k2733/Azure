@@ -16,13 +16,12 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().filename",
+					"value": "@{dataset().filename}.deflate",
 					"type": "Expression"
 				},
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
-			"compressionCodec": "ZipDeflate",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
