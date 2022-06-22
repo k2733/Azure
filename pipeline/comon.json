@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "Data flow2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -73,7 +73,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "Data flow2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -172,11 +172,73 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Data flow2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "ForEach2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow2",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 32,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "Json2",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach2",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Append variable1",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -185,15 +247,35 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('payrollname')",
+						"value": "@range(0,activity('Lookup1').output.count)",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "Set variable1",
+							"type": "SetVariable",
 							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "payrollname",
+								"value": {
+									"value": "@array(activity('Lookup1').output.value[item()]['PAYROLL_NAME'])",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Copy data1_copy1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -206,7 +288,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\n  AND KEY_ITEM_01 = '@{item()}'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+										"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\n  AND KEY_ITEM_01 = '@{variables('payrollname')[0]}'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
@@ -242,86 +324,17 @@
 							"outputs": [
 								{
 									"referenceName": "DelimitedText3",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@variables('payrollname')[0]",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "Data flow2",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "1.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow2",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 32,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
-			},
-			{
-				"name": "Append variable1",
-				"type": "AppendVariable",
-				"dependsOn": [
-					{
-						"activity": "Lookup1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "payrollname",
-					"value": {
-						"value": "@activity('Data flow2').output",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"dataset": {
-						"referenceName": "PayrollFilter",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
 				}
 			}
 		],

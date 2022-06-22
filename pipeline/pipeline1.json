@@ -158,6 +158,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"作成日時": {
+				"type": "string",
+				"defaultValue": "202203"
+			},
+			"カレンダ月": {
+				"type": "string",
+				"defaultValue": "7 2022 カレンダ月"
+			}
+		},
 		"annotations": []
 	}
 }

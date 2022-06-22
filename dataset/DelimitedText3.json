@@ -5,18 +5,24 @@
 			"referenceName": "AzureStorageLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "output1",
+					"value": "@dataset().filename",
 					"type": "Expression"
 				},
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
+			"compressionCodec": "ZipDeflate",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""

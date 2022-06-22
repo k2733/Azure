@@ -1,32 +1,26 @@
 {
-	"name": "PayrollFilter",
+	"name": "Json2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureStorageLinkedService",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Filter",
 				"container": "spfile"
-			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": false,
-			"quoteChar": "\""
-		},
-		"schema": [
-			{
-				"name": "PAYROLL_NAME",
-				"type": "String"
-			},
-			{
-				"name": "DAY",
-				"type": "String"
 			}
-		]
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"PAYROLL_NAME": {
+					"type": "string"
+				}
+			}
+		}
 	}
 }
