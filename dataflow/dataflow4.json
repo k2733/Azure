@@ -21,10 +21,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "Result1",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
@@ -59,10 +55,8 @@
 				"source1, source2 union(byName: false)~> union1",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['Result1'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

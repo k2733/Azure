@@ -5,12 +5,22 @@
 			"referenceName": "AzureStorageLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "@{pipeline().parameters.作成日時}"
+			}
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "filter1",
+				"fileName": "Filter1",
+				"folderPath": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
 				"container": "spfile"
 			}
 		},

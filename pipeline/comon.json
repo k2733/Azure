@@ -214,7 +214,10 @@
 					},
 					"dataset": {
 						"referenceName": "Json1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "@{pipeline().parameters.作成日時}"
+						}
 					},
 					"firstRowOnly": false
 				}

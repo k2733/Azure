@@ -14,10 +14,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "Json1",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
@@ -35,12 +31,16 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     partitionBy('hash', 1)) ~> source1",
-				"source1 filter(DAY=='16') ~> filter1",
+				"source1 filter(DAY=='16',",
+				"     partitionBy('hash', 1)) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['Filter'],",
+				"     filePattern:'Flter',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          PAYROLL_NAME",

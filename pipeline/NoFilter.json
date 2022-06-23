@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "NoFilter",
 	"properties": {
 		"activities": [
 			{
@@ -47,7 +47,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.count",
+						"value": "@range(0,activity('Lookup1').output.count)",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -60,14 +60,14 @@
 							"typeProperties": {
 								"variableName": "payrollN",
 								"value": {
-									"value": "if(activity('Lookup1').output.value[item()][1]=pipeline().parameters.日,'activity('Lookup1').output.value[item()][0]')",
+									"value": "@if(equals(activity('Lookup1').output.value[item()]['DAY'],pipeline().parameters.日),activity('Lookup1').output.value[item()]['PAYROLL_NAME'],'')",
 									"type": "Expression"
 								}
 							}
 						},
 						{
-							"name": "Copy data1_copy1",
-							"type": "Copy",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [
 								{
 									"activity": "Set variable1",
@@ -76,72 +76,83 @@
 									]
 								}
 							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "OracleSource",
-									"oracleReaderQuery": {
-										"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\n  AND KEY_ITEM_01 = '@{variables('payrollN')}'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
-										"type": "Expression"
-									},
-									"partitionOption": "None",
-									"queryTimeout": "02:00:00"
+								"expression": {
+									"value": "@if(bool(length(variables('payrollN'))),1,0)",
+									"type": "Expression"
 								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
+								"ifTrueActivities": [
+									{
+										"name": "Copy data1_copy1",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "OracleSource",
+												"oracleReaderQuery": {
+													"value": "SELECT \n     LOGICAL_TABLE_NUMBER dd\n    ,LOGICAL_TABLE_NAME   ee\n    ,KEY_ITEM_01          ff\n    ,KEY_ITEM_02          gg\n    ,KEY_ITEM_03          hh\n    ,FIXED_ITEM_01        ii\nFROM \n    ZHR_CM_FIXED_VALUE_TB FIXED \nWHERE \n  LOGICAL_TABLE_NUMBER = '802'\n  AND KEY_ITEM_03 = '給与'\n  AND KEY_ITEM_01 = '@{variables('payrollN')}'\nAND SYSDATE BETWEEN EFFECTIVE_START_DATE AND EFFECTIVE_END_DATE\nORDER BY LOGICAL_TABLE_NUMBER,KEY_ITEM_01,KEY_ITEM_02;",
+													"type": "Expression"
+												},
+												"partitionOption": "None",
+												"queryTimeout": "02:00:00"
+											},
+											"sink": {
+												"type": "DelimitedTextSink",
+												"storeSettings": {
+													"type": "AzureBlobStorageWriteSettings"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextWriteSettings",
+													"quoteAllText": true,
+													"fileExtension": ".txt"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "OracleSource3",
+												"type": "DatasetReference"
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DelimitedText3",
+												"type": "DatasetReference",
+												"parameters": {
+													"filename": {
+														"value": "@variables('payrollN')",
+														"type": "Expression"
+													}
+												}
+											}
+										]
 									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "OracleSource3",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DelimitedText3",
-									"type": "DatasetReference",
-									"parameters": {
-										"filename": {
-											"value": "@variables('payrollN')[0]",
-											"type": "Expression"
-										}
-									}
-								}
-							]
+								]
+							}
 						}
 					]
 				}
 			}
 		],
 		"parameters": {
-			"作成日時": {
-				"type": "string"
-			},
 			"日": {
 				"type": "string",
 				"defaultValue": "16"
