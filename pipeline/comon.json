@@ -5,14 +5,7 @@
 			{
 				"name": "Copy_PAYMENT_DATE",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Data flow2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -71,14 +64,7 @@
 			{
 				"name": "Copy_OPEN_DATE",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Data flow2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -174,14 +160,7 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "ForEach2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
@@ -205,7 +184,14 @@
 			{
 				"name": "Lookup1",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -227,7 +213,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "Json2",
+						"referenceName": "Json1",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -239,6 +225,12 @@
 				"dependsOn": [
 					{
 						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Data flow1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
