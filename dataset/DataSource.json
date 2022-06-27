@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "202203",
+				"folderPath": "zip",
 				"container": "spfile"
 			},
 			"columnDelimiter": ",",
