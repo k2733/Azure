@@ -1,5 +1,5 @@
 {
-	"name": "Copy",
+	"name": "Copy_to_SqlServer",
 	"properties": {
 		"activities": [
 			{
@@ -26,11 +26,23 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "payroll",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlServerTable1",
 						"type": "DatasetReference"
 					}
 				]
