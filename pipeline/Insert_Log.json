@@ -1,5 +1,5 @@
 {
-	"name": "Copy_to_SqlServer",
+	"name": "Insert_Log",
 	"properties": {
 		"activities": [
 			{
