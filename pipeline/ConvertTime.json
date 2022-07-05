@@ -1,0 +1,35 @@
+{
+	"name": "ConvertTime",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time",
+					"value": {
+						"value": "@addToTime(concat(substring('20220110',0,4),'-',substring('20220110',4,2),'-',substring('20220110',6,2)),-1,'Month')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"日": {
+				"type": "string",
+				"defaultValue": "16"
+			}
+		},
+		"variables": {
+			"payrollN": {
+				"type": "String"
+			},
+			"time": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
