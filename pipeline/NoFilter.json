@@ -161,6 +161,9 @@
 		"variables": {
 			"payrollN": {
 				"type": "String"
+			},
+			"time": {
+				"type": "String"
 			}
 		},
 		"annotations": []
