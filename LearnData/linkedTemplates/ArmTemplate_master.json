@@ -19,9 +19,17 @@
 			"type": "secureString",
 			"metadata": "“VCC”的“connectionString”的安全字符串"
 		},
+		"kklearn_connectionString": {
+			"type": "secureString",
+			"metadata": "“kklearn”的“connectionString”的安全字符串"
+		},
 		"Azure_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "k2733"
+		},
+		"EveryDay8_properties_ConvertTime_parameters_日": {
+			"type": "string",
+			"defaultValue": "1"
 		},
 		"containerUri": {
 			"type": "string",
@@ -59,12 +67,38 @@
 					"VCC_connectionString": {
 						"value": "[parameters('VCC_connectionString')]"
 					},
+					"kklearn_connectionString": {
+						"value": "[parameters('kklearn_connectionString')]"
+					},
 					"Azure_properties_typeProperties_username": {
 						"value": "[parameters('Azure_properties_typeProperties_username')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "LearnData_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"EveryDay8_properties_ConvertTime_parameters_日": {
+						"value": "[parameters('EveryDay8_properties_ConvertTime_parameters_日')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'LearnData_ArmTemplate_0')]"
+			]
 		}
 	]
 }

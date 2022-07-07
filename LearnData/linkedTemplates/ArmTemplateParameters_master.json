@@ -14,8 +14,14 @@
 		"VCC_connectionString": {
 			"value": ""
 		},
+		"kklearn_connectionString": {
+			"value": ""
+		},
 		"Azure_properties_typeProperties_username": {
 			"value": "k2733"
+		},
+		"EveryDay8_properties_ConvertTime_parameters_日": {
+			"value": "1"
 		},
 		"containerUri": {
 			"value": ""
